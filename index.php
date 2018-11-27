@@ -15,8 +15,10 @@ $app->get('/test', function($request, $response, $args){
     return $response->withStatus(200)->write('Hello world!');
 });
 
-$app->get('/product', function($request, $response, $args){
+$app->get('/product={name}', function($request, $response, $args){
+    $name = $request->getAttribute('name');
     $myArray = array();
+    
     $con = db_con();
     $sql = 'select * from product';
     $result = mysqli_query($con, $sql);
@@ -24,8 +26,14 @@ $app->get('/product', function($request, $response, $args){
     while($row = mysqli_fetch_array($result)){
         $myArray[] = $row;
     }
+    $json = json_encode($myArray);
+    foreach($json as $key => $value){
+        if($key == $name) {
+            $price = $value;
+        }
+    }
+    $response->getbody()->write("JSON : " . json_encode($myArray) . " " . $price);
     
-    $response->getbody()->write("JSON : " . json_encode($myArray));
     return $response;
 });
 
