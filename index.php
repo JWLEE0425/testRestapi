@@ -29,21 +29,23 @@ $app->get('/product', function($request, $response, $args){
     return $response;
 });
 
-$app->get('/product={name}', function($request, $response){
+$app->get('/product/{name}', function($request, $response){
     $name = $request->getAttribute('name');
     $myArray = array();
     $con = db_con();
     $sql = 'select * from product where name ="' . $name . '"';
     $result = mysqli_query($con, $sql);
-    
-    while($row = mysqli_fetch_assoc($result)){
+
+    while ($row = mysqli_fetch_assoc($result)) {
         $myArray[] = $row;
     }
-    
-    
-    $response->getbody()->write("price : " . json_encode($myArray));
-    
+    $json = json_encode($myArray);
+    $d_json = json_decode($json, true);
+    $response->getbody()->write("JSON : " . $json . " price :" . $d_json['price']);
+
     return $response;
+    
+    
 });
 
 
