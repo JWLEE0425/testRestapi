@@ -10,7 +10,7 @@ $app->get('/', function($request, $response, $args) {
 $app->get('/test', function($request, $response, $args){
     return $response->withStatus(200)->write('Hello world!');
 });
-$app->get('/product/{name}', function($request, $response){
+$app->get('/product/name={name}', function($request, $response){
     $name=$request->getAttribute('name');
     $price = get_price($name);
     if(empty($price)) {
