@@ -32,9 +32,8 @@ $app->get('/product', function($request, $response, $args){
 $app->get('/product={name}', function($request, $response){
     $name = $request->getAttribute('name');
     $myArray = array();
-    
     $con = db_con();
-    $sql = 'select * from product where name ='.$name.'';
+    $sql = 'select * from product where name ="' . $name . '"';
     $result = mysqli_query($con, $sql);
     
     while($row = mysqli_fetch_assoc($result)){
