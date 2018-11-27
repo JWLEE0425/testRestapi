@@ -29,7 +29,6 @@ $app->get('/product', function($request, $response, $args){
     return $response;
 });
 
-
 $app->get('/product={name}', function($request, $response, $args){
     $name = $request->getAttribute('name');
     $myArray = array();
@@ -42,15 +41,19 @@ $app->get('/product={name}', function($request, $response, $args){
         $myArray[] = $row;
     }
     $json = json_encode($myArray);
-    foreach($json as $key => $value){
+    
+    $d_json = json_decode($json);
+    foreach($d_json as $key => $value){
         if($key == $name) {
             $price = $value;
+            break;
         }
     }
-    $response->getbody()->write("JSON : " . json_encode($myArray) . " " . $price);
+    $response->getbody()->write("price : " . $price);
     
     return $response;
 });
+
 
 $app->run();
 
