@@ -25,14 +25,16 @@ function get_price($name) {
     $con = db_con();
     $sql = 'select * from product';
     $result = mysqli_query($con, $sql);
-    $row = mysqli_fetch_array($result);
     
-    foreach($products as $row['name']=>$row['price']) {
-        if($row['name']==$name) {
-            return $row['price'];
-	       break;
-	   }
+    while($row = mysqli_fetch_assoc($result)){
+        foreach($product as $row['name']=>$row['price']) {
+            if($row['name']==$name) {
+                return $row['price'];
+                break;
+            }
+        }
     }
+    
 }
 function response($status, $status_message, $data) {
     header("HTTP/1.1".$status);
