@@ -22,16 +22,22 @@ $app->get('/product/name={name}', function($request, $response){
     return $response;
 });
 function get_price($name) {
+    $myArray = array();
     $con = db_con();
     $sql = 'select * from product';
     $result = mysqli_query($con, $sql);
     
-    while($row = mysqli_fetch_assoc($result)){
-        foreach($product as $row['name']=>$row['price']) {
-            if($row['name']==$name) {
-                return $row['price'];
-                break;
-            }
+    while($row = mysqli_fetch_array($result)){
+        $myArray[] = $row;
+    }
+    $products = json_encode($myArray);
+    
+    foreach($products as $product=>$price)
+    {
+        if($product==$name)
+        {
+            return $price;
+            break;
         }
     }
     
