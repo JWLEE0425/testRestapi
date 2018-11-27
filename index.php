@@ -29,27 +29,20 @@ $app->get('/product', function($request, $response, $args){
     return $response;
 });
 
-$app->get('/product={name}', function($request, $response, $args){
+$app->get('/product={name}', function($request, $response){
     $name = $request->getAttribute('name');
     $myArray = array();
     
     $con = db_con();
-    $sql = 'select * from product';
+    $sql = 'select * from product where name ='.$name.'';
     $result = mysqli_query($con, $sql);
     
     while($row = mysqli_fetch_assoc($result)){
         $myArray[] = $row;
     }
-    $json = json_encode($myArray);
     
-    $d_json = json_decode($json);
-    foreach($d_json as $key => $value){
-        if($key == $name) {
-            $price = $value;
-            break;
-        }
-    }
-    $response->getbody()->write("price : " . $price);
+    
+    $response->getbody()->write("price : " . json_encode($myArray));
     
     return $response;
 });
