@@ -21,7 +21,7 @@ $app->get('/product', function($request, $response, $args){
     $sql = 'select * from product';
     $result = mysqli_query($con, $sql);
     
-    while($row = mysqli_fetch_array($result)){
+    while($row = mysqli_fetch_assoc($result)){
         $myArray[] = $row;
     }
     
@@ -38,7 +38,7 @@ $app->get('/product={name}', function($request, $response, $args){
     $sql = 'select * from product';
     $result = mysqli_query($con, $sql);
     
-    while($row = mysqli_fetch_array($result)){
+    while($row = mysqli_fetch_assoc($result)){
         $myArray[] = $row;
     }
     $json = json_encode($myArray);
