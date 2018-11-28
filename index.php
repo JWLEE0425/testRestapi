@@ -48,6 +48,28 @@ $app->get('/product/{name}', function($request, $response){
     
 });
 
+$app->post('/post/data', function ($request, $response, $arg) {
+
+    $_input = $request->getParsedBody();
+
+    $_data_1 = $_input['name'];
+    $_data_2 = $_input['email'];
+    $rsp = array();
+
+    if (! empty($_data_1 && ! empty($_data_2))) {
+
+        $rsp["error"] = false;
+        $rsp['message'] = "hello my name is " . $_data_1 . " and my email is " . $_data_2;
+    } else {
+
+        $rsp["error"] = false;
+        $rsp['message'] = "you have not posted any data";
+    }
+
+    return $response->withStatus(201)->withJson($rsp);
+});
+
+
 
 $app->run();
 
